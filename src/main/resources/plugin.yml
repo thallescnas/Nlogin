@@ -1,0 +1,7 @@
+name: Main
+version: '0.1'
+main: me.natu.nlogin.main.Main
+api-version: '1.20'
+load: STARTUP
+authors: [ thallescnas ]
+description: A simple login system
