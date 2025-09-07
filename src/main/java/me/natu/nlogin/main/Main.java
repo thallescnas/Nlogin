@@ -1,6 +1,9 @@
 package me.natu.nlogin.main;
 
 import me.natu.nlogin.main.api.API;
+import me.natu.nlogin.main.commands.RegisterCommand;
+import me.natu.nlogin.main.events.LoginEvent;
+import me.natu.nlogin.main.events.MoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -16,6 +19,8 @@ public final class Main extends JavaPlugin {
     public void onLoad() {
         instance = this;
         api = new API();
+
+        getCommand("register").setExecutor(new RegisterCommand());
     }
 
     @Override
@@ -24,7 +29,7 @@ public final class Main extends JavaPlugin {
         if(!f.exists()) {
             getConfig().options().copyDefaults(true);
         }
-
+        loadEvents();
     }
     @Override
     public void onDisable() {
@@ -34,6 +39,11 @@ public final class Main extends JavaPlugin {
 
     public static Main getInstance() {
         return instance;
+    }
+
+    private void loadEvents() {
+        getServer().getPluginManager().registerEvents(new LoginEvent(), this);
+        getServer().getPluginManager().registerEvents(new MoveEvent(), this);
     }
 }
 

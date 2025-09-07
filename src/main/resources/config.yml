@@ -1,5 +1,6 @@
 messages:
-  register: "&6Digite /register para fazer registro! Você tem {tempo}"
-  registerkicktimeout: "&4Você demorou de mais para fazer registro1"
-  login: ""
+  register: "&6Digite /register <senha> <senha> para fazer registro! Você tem {tempo}"
+  registerkicktimeout: "&4Você demorou de mais para fazer registro!"
+  loginkicktimeout: "&4Você demorou de mais para fazer login!"
+  login: "&2Digite /login <senha> para fazer o login! Você {tempo}"
   chaterror: "Antes de enviar mensagem faça login!"

@@ -18,7 +18,7 @@ public class LoginEvent implements Listener {
     @EventHandler
     public void PlayerLogin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        if (api.areLogged(p)) {
+        if (!api.areLogged(p)) {
             new BukkitRunnable() {
                 int time = 15;
                 @Override
@@ -31,12 +31,18 @@ public class LoginEvent implements Listener {
                             p.kickPlayer(ChatColor.translateAlternateColorCodes('&', Main.getInstance().getConfig().getString("messages.registerkicktimeout")));
                             cancel();
                         }
+                    } else if (api.areRegistered(p)) {
+                        if (time > 0) {
+                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.getInstance().getConfig().getString("messages.login")
+                                    .replace("{tempo}", String.valueOf(time))));
+                        } else {
+                            p.kickPlayer(ChatColor.translateAlternateColorCodes('&', Main.getInstance().getConfig().getString("messages.loginkicktimeout")));
+                            cancel();
+                        }
                     }
                     time--;
                 }
             }.runTaskTimer(Main.getInstance(), 0, 20 * 15);
-        } else {
-
         }
     }
 
