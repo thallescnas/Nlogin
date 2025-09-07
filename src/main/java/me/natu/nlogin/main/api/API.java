@@ -1,5 +1,6 @@
-package me.natu.nlogin.main.api.API;
+package me.natu.nlogin.main.api;
 
+import me.natu.nlogin.main.utils.Encryptor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -9,16 +10,44 @@ public final class API {
 
 
     private Map<UUID, String> users = new HashMap<>();
+    private List<UUID> logged = new ArrayList<>();
 
     public Map<UUID, String> getUsers() {
         return users;
     }
 
-    public void registerUser(Player p, String password) {
-        users.put(p.getUniqueId(), password);
+    public void registerUser(Player p, String passwd) {
+        registerUser(p.getUniqueId(), passwd);
     }
-    public void registerUser(UUID p, String password) {
-        users.put(p, password);
+    public void registerUser(UUID p, String passwd) {
+        if(!users.containsKey(p)) {
+            users.put(p, Encryptor.hashPassword(passwd));
+        }
+    }
+
+    public List<UUID> getLogged() {
+        return logged;
+    }
+
+    public boolean areLogged(UUID p) {
+        return logged.contains(p);
+    }
+    public boolean areLogged(Player p) {
+        return logged.contains(p.getUniqueId());
+    }
+
+    public void loginUser(UUID p, String passwd) {
+        if(users.containsKey(p)) {
+            if(!areLogged(p)) {
+                if(Encryptor.verifyPassword(passwd, users.get(p))) {
+                    logged.add(p);
+                }
+            }
+        }
+    }
+
+    public void loginUser(Player p, String passwd) {
+
     }
 
     public List<UUID> getRegisteredUsers() {
@@ -59,5 +88,7 @@ public final class API {
     public String getPasswd(Player p) {
         return getPasswd(p.getUniqueId());
     }
+
+
 
 }
