@@ -3,6 +3,8 @@ package me.natu.nlogin.main;
 import me.natu.nlogin.main.api.API;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+
 public final class Main extends JavaPlugin {
 
 
@@ -18,7 +20,10 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
+        File f = new File(getDataFolder(), "config.yml");
+        if(!f.exists()) {
+            getConfig().options().copyDefaults(true);
+        }
 
     }
     @Override

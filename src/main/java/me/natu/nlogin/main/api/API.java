@@ -33,7 +33,7 @@ public final class API {
         return logged.contains(p);
     }
     public boolean areLogged(Player p) {
-        return logged.contains(p.getUniqueId());
+        return areLogged(p.getUniqueId());
     }
 
     public void loginUser(UUID p, String passwd) {
@@ -47,7 +47,7 @@ public final class API {
     }
 
     public void loginUser(Player p, String passwd) {
-
+        loginUser(p.getUniqueId(), passwd);
     }
 
     public List<UUID> getRegisteredUsers() {
