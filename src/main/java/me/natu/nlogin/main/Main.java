@@ -6,7 +6,6 @@ import me.natu.nlogin.main.events.LoginEvent;
 import me.natu.nlogin.main.events.MoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
 
 public final class Main extends JavaPlugin {
 
@@ -20,16 +19,13 @@ public final class Main extends JavaPlugin {
         instance = this;
         api = new API();
 
-        getCommand("register").setExecutor(new RegisterCommand());
+        saveDefaultConfig();
     }
 
     @Override
     public void onEnable() {
-        File f = new File(getDataFolder(), "config.yml");
-        if(!f.exists()) {
-            getConfig().options().copyDefaults(true);
-        }
         loadEvents();
+        getCommand("register").setExecutor(new RegisterCommand());
     }
     @Override
     public void onDisable() {

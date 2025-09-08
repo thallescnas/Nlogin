@@ -42,7 +42,7 @@ public class LoginEvent implements Listener {
                     }
                     time--;
                 }
-            }.runTaskTimer(Main.getInstance(), 0, 20 * 15);
+            }.runTaskTimer(Main.getInstance(), 0, 20);
         }
     }
 
@@ -50,6 +50,7 @@ public class LoginEvent implements Listener {
     public void PlayerChat(AsyncPlayerChatEvent e) {
         if(!api.areLogged(e.getPlayer())) {
             if(!e.getMessage().equals("/login") || e.getMessage().equals("/register")) {
+                e.setCancelled(true);
                 e.getPlayer().sendMessage(Main.getInstance().getConfig().getString("messages.chaterror"));
             }
         }
