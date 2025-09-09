@@ -7,3 +7,4 @@ authors: [ thallescnas ]
 description: A simple login system
 commands:
   register:
+  login:

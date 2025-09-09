@@ -20,11 +20,12 @@ public class LoginEvent implements Listener {
         Player p = e.getPlayer();
         if (!api.areLogged(p)) {
             new BukkitRunnable() {
-                int time = 15;
+                int time = 20;
+
                 @Override
                 public void run() {
                     if (!api.areRegistered(p)) {
-                        if(time > 0) {
+                        if (time > 0) {
                             p.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.getInstance().getConfig().getString("messages.register")
                                     .replace("{tempo}", String.valueOf(time))));
                         } else {
@@ -32,11 +33,15 @@ public class LoginEvent implements Listener {
                             cancel();
                         }
                     } else if (api.areRegistered(p)) {
-                        if (time > 0) {
-                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.getInstance().getConfig().getString("messages.login")
-                                    .replace("{tempo}", String.valueOf(time))));
+                        if (!api.areLogged(p)) {
+                            if (time > 0) {
+                                p.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.getInstance().getConfig().getString("messages.login")
+                                        .replace("{tempo}", String.valueOf(time))));
+                            } else {
+                                p.kickPlayer(ChatColor.translateAlternateColorCodes('&', Main.getInstance().getConfig().getString("messages.loginkicktimeout")));
+                                cancel();
+                            }
                         } else {
-                            p.kickPlayer(ChatColor.translateAlternateColorCodes('&', Main.getInstance().getConfig().getString("messages.loginkicktimeout")));
                             cancel();
                         }
                     }
@@ -48,10 +53,10 @@ public class LoginEvent implements Listener {
 
     @EventHandler
     public void PlayerChat(AsyncPlayerChatEvent e) {
-        if(!api.areLogged(e.getPlayer())) {
-            if(!e.getMessage().equals("/login") || e.getMessage().equals("/register")) {
+        if (!api.areLogged(e.getPlayer())) {
+            if (!e.getMessage().equals("/login") || e.getMessage().equals("/register")) {
                 e.setCancelled(true);
-                e.getPlayer().sendMessage(Main.getInstance().getConfig().getString("messages.chaterror"));
+                e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',Main.getInstance().getConfig().getString("messages.chaterror")));
             }
         }
     }

@@ -1,6 +1,7 @@
 package me.natu.nlogin.main;
 
 import me.natu.nlogin.main.api.API;
+import me.natu.nlogin.main.commands.LoginCommand;
 import me.natu.nlogin.main.commands.RegisterCommand;
 import me.natu.nlogin.main.events.LoginEvent;
 import me.natu.nlogin.main.events.MoveEvent;
@@ -20,16 +21,18 @@ public final class Main extends JavaPlugin {
         api = new API();
 
         saveDefaultConfig();
+        api.loadUsers();
     }
 
     @Override
     public void onEnable() {
         loadEvents();
         getCommand("register").setExecutor(new RegisterCommand());
+        getCommand("login").setExecutor(new LoginCommand());
     }
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        api.saveUsers();
     }
 
 
