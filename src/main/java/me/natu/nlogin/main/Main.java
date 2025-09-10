@@ -22,6 +22,7 @@ public final class Main extends JavaPlugin {
 
         saveDefaultConfig();
         api.loadUsers();
+        api.getMessage();
     }
 
     @Override
