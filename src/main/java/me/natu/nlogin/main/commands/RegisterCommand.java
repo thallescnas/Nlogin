@@ -20,12 +20,12 @@ public class RegisterCommand implements CommandExecutor {
                 if(args.length == 2) {
                     if(args[0].equals(args[1])) {
                         api.registerUser(p, args[0]);
-                        p.kickPlayer(ChatColor.translateAlternateColorCodes('&', Main.getInstance().getConfig().getString("messages.registerkicksucess")));
+                        p.kickPlayer(ChatColor.translateAlternateColorCodes('&',Main.getInstance().api.getMessage().getConfig().getString("register.sucess")));
                     } else {
                         p.sendMessage(ChatColor.RED + "Senha de confirmação errada!");
                     }
                 } else {
-                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.getInstance().getConfig().getString("messages.registererror")));
+                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.getInstance().api.getMessage().getConfig().getString("register.error")));
                 }
             } else {
                 p.sendMessage("Você já esta registrado! Utilize: /login <senha>");

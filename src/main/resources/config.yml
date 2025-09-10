@@ -1,9 +1,0 @@
-messages:
-  register: "&6Digite /register <senha> <senha> para fazer registro! Você tem {tempo} segundos!"
-  registererror: "&4Comando errado! utilize: /register <senha> <senha>"
-  registerkicktimeout: "&4Você demorou de mais para fazer registro!"
-  registerkicksucess: "&2Registro feito com sucesso!"
-  loginkicktimeout: "&4Você demorou de mais para fazer login!"
-  login: "&2Digite /login <senha> para fazer o login! Você {tempo} segundos"
-  loginsucessmessage: "&2Login feito com sucesso!"
-  chaterror: "&4Antes de enviar mensagem faça login!"

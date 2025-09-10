@@ -1,0 +1,11 @@
+register:
+  error: "&4Comando errado! utilize: /register <senha> <senha>"
+  sucess: "&2Registro feito com sucesso!"
+  timeout: "&4Você demorou demais para fazer registro!"
+  timer: "&6Digite /register <senha> <senha> para fazer registro! Você tem {tempo} segundos!"
+login:
+  sucess: "&2Login feito com sucesso!"
+  wrong_passwd: "&4Senha errada você tem mais {tentativas} tentativas!"
+  timer: "&2Digite /login <senha> para fazer o login! Você {tempo} segundos"
+  timeout: "&4Você demorou de mais para fazer login!"
+chat_error: "&4Antes de enviar mensagem faça login!"

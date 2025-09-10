@@ -6,7 +6,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.File;
-import java.io.IOException;
 
 public class FileC extends File {
 
@@ -14,13 +13,7 @@ public class FileC extends File {
 
     public FileC(@NonNull String name) {
         super(Main.getInstance().getDataFolder(), name);
-        if(!this.exists()) {
-            try {
-                this.createNewFile();
-            } catch (IOException e) {
-                // oohh
-            }
-        }
+
         this.config = YamlConfiguration.loadConfiguration(this);
     }
 
@@ -30,6 +23,9 @@ public class FileC extends File {
     }
 
     public void saveConfig() throws java.io.IOException {
-            this.getConfig().save(this);
+        if (!this.exists()) {
+            this.createNewFile();
+        }
+        this.getConfig().save(this);
     }
 }

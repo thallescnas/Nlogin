@@ -26,19 +26,19 @@ public class LoginEvent implements Listener {
                 public void run() {
                     if (!api.areRegistered(p)) {
                         if (time > 0) {
-                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.getInstance().getConfig().getString("messages.register")
+                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.getInstance().api.getMessage().getConfig().getString("register.timer")
                                     .replace("{tempo}", String.valueOf(time))));
                         } else {
-                            p.kickPlayer(ChatColor.translateAlternateColorCodes('&', Main.getInstance().getConfig().getString("messages.registerkicktimeout")));
+                            p.kickPlayer(ChatColor.translateAlternateColorCodes('&', Main.getInstance().api.getMessage().getConfig().getString("register.timeout")));
                             cancel();
                         }
                     } else if (api.areRegistered(p)) {
                         if (!api.areLogged(p)) {
                             if (time > 0) {
-                                p.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.getInstance().getConfig().getString("messages.login")
+                                p.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.getInstance().api.getMessage().getConfig().getString("login.timer")
                                         .replace("{tempo}", String.valueOf(time))));
                             } else {
-                                p.kickPlayer(ChatColor.translateAlternateColorCodes('&', Main.getInstance().getConfig().getString("messages.loginkicktimeout")));
+                                p.kickPlayer(ChatColor.translateAlternateColorCodes('&', Main.getInstance().api.getMessage().getConfig().getString("login.timeout")));
                                 cancel();
                             }
                         } else {
@@ -56,7 +56,7 @@ public class LoginEvent implements Listener {
         if (!api.areLogged(e.getPlayer())) {
             if (!e.getMessage().equals("/login") || e.getMessage().equals("/register")) {
                 e.setCancelled(true);
-                e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',Main.getInstance().getConfig().getString("messages.chaterror")));
+                e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Main.getInstance().api.getMessage().getConfig().getString("chat_error")));
             }
         }
     }

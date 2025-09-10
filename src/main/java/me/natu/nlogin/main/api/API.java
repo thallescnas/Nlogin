@@ -15,6 +15,7 @@ public final class API {
     private final FileC userf = new FileC("users.yml");
     private final Map<UUID, String> users = new HashMap<>();
     private final List<UUID> logged = new ArrayList<>();
+    private final FileC messagef = new FileC("messages.yml");
 
     public Map<UUID, String> getUsers() {
         return users;
@@ -110,6 +111,13 @@ public final class API {
                 users.put(UUID.fromString(u), userf.getConfig().getString("users." + u));
             }
         }
+    }
+
+    public FileC getMessage() {
+        if(!messagef.exists()) {
+            Main.getInstance().saveResource("messages.yml", false);
+        }
+        return messagef;
     }
 
 
