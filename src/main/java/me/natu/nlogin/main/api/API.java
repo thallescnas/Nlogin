@@ -1,21 +1,23 @@
 package me.natu.nlogin.main.api;
 
 import me.natu.nlogin.main.Main;
+import me.natu.nlogin.main.utils.DBManager;
 import me.natu.nlogin.main.utils.Encryptor;
 import me.natu.nlogin.main.utils.FileC;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.logging.Level;
 
 public final class API {
 
-
-    private final FileC userf = new FileC("users.yml");
     private final Map<UUID, String> users = new HashMap<>();
     private final List<UUID> logged = new ArrayList<>();
     private final FileC messagef = new FileC("messages.yml");
+    private final DBManager dbManager = new DBManager();
 
     public Map<UUID, String> getUsers() {
         return users;
@@ -58,7 +60,7 @@ public final class API {
         return null;
     }
 
-    public List<Player> getRegisteredUsersp() {
+    public List<Player> getRegisteredUsersP() {
         ArrayList<Player> a = new ArrayList<Player>();
         if (!users.isEmpty()) {
             for (Player p : Bukkit.getOnlinePlayers()) {
@@ -92,25 +94,22 @@ public final class API {
 
     public void saveUsers() {
         if (!users.isEmpty()) {
-            for (Map.Entry<UUID, String> k : users.entrySet()) {
-                if(!userf.getConfig().contains("users." + k.getKey().toString())) {
-                    userf.getConfig().set("users." + k.getKey().toString(), k.getValue());
-                }
-            }
             try {
-                userf.saveConfig();
-            } catch (Exception e) {
-                Main.getInstance().getLogger().log(Level.WARNING, "Não foi possivel salvar os usuários!");
+                dbManager.saveUsers();
+                Main.getInstance().getLogger().log(Level.FINE, "Usuários salvos com sucesso!");
+            } catch (SQLException e) {
+                Main.getInstance().getLogger().log(Level.SEVERE, "Não foi possivel salvar os usuarios! Fallback para modo yml...");
             }
         }
     }
 
     public void loadUsers() {
-        if (userf.exists() && userf.getConfig().getConfigurationSection("users") != null) {
-            for (String u : userf.getConfig().getConfigurationSection("users").getKeys(false)) {
-                users.put(UUID.fromString(u), userf.getConfig().getString("users." + u));
-            }
-        }
+       try {
+           dbManager.loadUsers();
+           Main.getInstance().getLogger().log(Level.FINE, "Usuários carregados com sucesso!");
+       } catch (SQLException e) {
+           Main.getInstance().getLogger().log(Level.SEVERE, "Não foi possivel carregaar os usuarios!");
+       }
     }
 
     public FileC getMessage() {
@@ -120,5 +119,21 @@ public final class API {
         return messagef;
     }
 
+
+    public void openConnection() {
+        try {
+            dbManager.getCon(Main.getInstance().getConfig().getString("type"));
+        } catch (SQLException e) {
+            Main.getInstance().getLogger().log(Level.INFO, "Conexão aberta!");
+        }
+    }
+
+    public void closeConnection() {
+        try {
+            dbManager.getCon(Main.getInstance().getConfig().getString("type")).close();
+        } catch (SQLException e) {
+            Main.getInstance().getLogger().log(Level.INFO, "Conexão fechada!");
+        }
+    }
 
 }
