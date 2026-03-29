@@ -7,6 +7,7 @@ import me.natu.nlogin.main.utils.FileC;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.logging.Level;
@@ -119,5 +120,20 @@ public final class API {
     }
 
 
+    public void openConnection() {
+        try {
+            dbManager.getCon(Main.getInstance().getConfig().getString("type"));
+        } catch (SQLException e) {
+            Main.getInstance().getLogger().log(Level.INFO, "Conexão aberta!");
+        }
+    }
+
+    public void closeConnection() {
+        try {
+            dbManager.getCon(Main.getInstance().getConfig().getString("type")).close();
+        } catch (SQLException e) {
+            Main.getInstance().getLogger().log(Level.INFO, "Conexão fechada!");
+        }
+    }
 
 }
