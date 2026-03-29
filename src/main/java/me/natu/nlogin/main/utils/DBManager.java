@@ -88,13 +88,15 @@ public final class DBManager {
     }
 
     public void loadUsers() throws SQLException {
-        API api = Main.getInstance().api;
-        PreparedStatement st = con.prepareStatement("SELECT * FROM users;");
-        ResultSet rs = st.executeQuery();
-        while(rs.next()) {
-            UUID uuid = UUID.fromString(rs.getString("uuid"));
-            String passwd = rs.getString("passwd");
-            api.getUsers().put(uuid, passwd);
+        if(!getUsers().isEmpty()) {
+            API api = Main.getInstance().api;
+            PreparedStatement st = con.prepareStatement("SELECT * FROM users;");
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                UUID uuid = UUID.fromString(rs.getString("uuid"));
+                String passwd = rs.getString("passwd");
+                api.getUsers().put(uuid, passwd);
+            }
         }
     }
 
